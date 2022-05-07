@@ -24,15 +24,15 @@ public class Main {
 
 	public static void main(String[] args) throws LoginException {
 		JDA jda = JDABuilder.createDefault("")
-		.enableCache(CacheFlag.VOICE_STATE)
-		.disableCache(CacheFlag.MEMBER_OVERRIDES)
-		.enableIntents(GatewayIntent.GUILD_VOICE_STATES)
-		.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
-		.setBulkDeleteSplittingEnabled(false)
-		.setCompression(Compression.NONE)
-		.setActivity(Activity.listening("Müzik"))
-		.addEventListeners(new CommandHandler())
-		.build();
+			.enableCache(CacheFlag.VOICE_STATE)
+			.disableCache(CacheFlag.MEMBER_OVERRIDES)
+			.enableIntents(GatewayIntent.GUILD_VOICE_STATES)
+			.setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
+			.setBulkDeleteSplittingEnabled(false)
+			.setCompression(Compression.NONE)
+			.setActivity(Activity.listening("Müzik"))
+			.addEventListeners(new CommandHandler())
+			.build();
 
 		OnlineStatus[] statuses = {OnlineStatus.ONLINE, OnlineStatus.DO_NOT_DISTURB, OnlineStatus.IDLE};
 
