@@ -3,7 +3,7 @@ package me.despical.bot.commands.subcommands;
 import me.despical.bot.commands.CommandArguments;
 import me.despical.bot.commands.CommandHandler;
 import me.despical.bot.commands.DCommand;
-import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
 
 /**
  * @author Despical
@@ -18,9 +18,16 @@ public class PrefixCommand extends DCommand {
 
 	@Override
 	public void execute(CommandArguments arguments) {
-		String message = arguments.getMessage().getContentDisplay(), prefix = message.split(" ")[1];
-		CommandHandler.setPrefix(prefix);
+		final MessageChannel channel = arguments.getChannel();
+		final String[] prefix = arguments.getMessage().getContentDisplay().split(" ");
 
-		arguments.getChannel().sendMessage(new MessageBuilder("Prefix başarıyla `" + prefix + "` olarak atanmıştır").build()).queue();
+		if (prefix.length < 1) {
+			channel.sendMessage("Lütfen geçerli bir prefix giriniz.").queue();
+			return;
+		}
+
+		CommandHandler.setPrefix(prefix[1]);
+
+		channel.sendMessage("Prefix başarıyla `" + prefix[1] + "` olarak atanmıştır").queue();
 	}
 }
