@@ -1,6 +1,7 @@
 # Discord Music Bot
 [![](https://jitpack.io/v/Despical/MusicBot.svg)](https://jitpack.io/#Despical/MusicBot)
 [![](https://img.shields.io/badge/Javadocs-latest-lime.svg)](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
+[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/Vhyy4HA)
 
 This is the base project for DBot. DBot is a music bot for Discord.
 
