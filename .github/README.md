@@ -1,13 +1,20 @@
-# Discord Music Bot
-[![](https://jitpack.io/v/Despical/MusicBot.svg)](https://jitpack.io/#Despical/MusicBot)
-[![](https://img.shields.io/badge/Javadocs-latest-lime.svg)](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
-[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/Vhyy4HA)
+<h1 align="center">Discord Music Bot</h1>
 
-This is the base project for DBot. DBot is a music bot for Discord.
+<div align="center">
+
+[![](https://jitpack.io/v/Despical/MusicBot.svg)](https://jitpack.io/#Despical/MusicBot)
+[![](https://img.shields.io/badge/JavaDocs-latest-lime.svg)](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
+[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/rVkaGmyszE)
+[![Support](https://img.shields.io/badge/Patreon-Support-lime.svg?logo=Patreon)](https://www.patreon.com/despical)
+
+Example implementation of LavaPlayer for Discord bots.
+
+</div>
 
 ## Documentation
-More information will be found on the [wiki page](https://github.com/Despical/MusicBot/wiki) soon. The [Javadoc](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html) can be browsed. Questions
-related to the usage of Music Bot should be posted on my [Discord server](https://discord.com/invite/Vhyy4HA).
+- [Wiki](https://github.com/Despical/MusicBot/wiki)
+- [JavaDocs](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
+- [Discord Community](https://www.discord.gg/rVkaGmyszE)
 
 ## Donations
 You like the Music Bot? Then [donate](https://www.patreon.com/despical) back me to support the development.
@@ -16,7 +23,8 @@ You like the Music Bot? Then [donate](https://www.patreon.com/despical) back me 
 The project isn't in the Central Repository yet, so specifying a repository is needed.<br>
 To add this project as a dependency to your project, add the following to your pom.xml:
 
-### Maven dependency
+<details>
+<summary>Maven dependency</summary>
 
 ```xml
 <repository>
@@ -33,7 +41,11 @@ To add this project as a dependency to your project, add the following to your p
 </dependency>
 ```
 
-### Gradle dependency
+</details>
+
+<details>
+<summary>Gradle dependency</summary>
+
 ```
 repositories {
     maven { url 'https://jitpack.io' }
@@ -44,6 +56,7 @@ dependencies {
     compileOnly group: "com.github.Despical", name: "MusicBot", version: "1.0.0-SNAPSHOT";
 }
 ```
+</details>
 
 ## License
 This code is under [GPL-3.0 License](http://www.gnu.org/licenses/gpl-3.0.html)
@@ -66,4 +79,4 @@ git clone https://www.github.com/Despical/MusicBot.git && cd MusicBot
 mvn clean package
 ```
 The build can then be found in ``/MusicBot/target/``
-And also don't forget to install Maven before building.
+> **Note** Don't forget to install Maven before building.
