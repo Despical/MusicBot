@@ -3,6 +3,7 @@ package me.despical.bot.commands.subcommands;
 import me.despical.bot.commands.CommandArguments;
 import me.despical.bot.commands.DCommand;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.lang.management.ManagementFactory;
 
@@ -19,6 +20,7 @@ public class UptimeCommand extends DCommand {
 
 	@Override
 	public void execute(CommandArguments arguments) {
+		final SlashCommandEvent event = arguments.getEvent();
 		final MessageChannel channel = arguments.getTextChannel();
 		final long
 				duration = ManagementFactory.getRuntimeMXBean().getUptime(),
@@ -27,6 +29,6 @@ public class UptimeCommand extends DCommand {
 				minutes = duration / 60000L % 60,
 				seconds = duration / 1000L % 60;
 
-		channel.sendMessageFormat("Tam olarak %d gün, %d saat, %d dakika ve %d saniyedir çalışıyorum.", days, hours, minutes, seconds).queue();
+		event.replyFormat("Tam olarak %d gün, %d saat, %d dakika ve %d saniyedir çalışıyorum.", days, hours, minutes, seconds).queue();
 	}
 }

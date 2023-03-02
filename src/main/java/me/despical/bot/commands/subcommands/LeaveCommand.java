@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 /**
@@ -27,9 +28,10 @@ public class LeaveCommand extends DCommand {
 		final TextChannel channel = arguments.getTextChannel();
 		final Member self = channel.getGuild().getSelfMember();
 		final GuildVoiceState state = self.getVoiceState();
+		final SlashCommandEvent event = arguments.getEvent();
 
 		if (!state.inVoiceChannel()) {
-			channel.sendMessage("Bot zaten bir odada değil!").queue();
+			event.reply("Bot zaten bir odada değil!").queue();
 			return;
 		}
 
@@ -42,6 +44,6 @@ public class LeaveCommand extends DCommand {
 		final AudioManager audioManager = arguments.getGuild().getAudioManager();
 		audioManager.closeAudioConnection();
 
-		channel.sendMessage("Bot mevcut odasından ayrıldı.").queue();
+		event.reply("Bot mevcut odasından ayrıldı.").queue();
 	}
 }

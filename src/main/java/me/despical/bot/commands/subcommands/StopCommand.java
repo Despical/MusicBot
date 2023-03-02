@@ -8,6 +8,7 @@ import me.despical.bot.music.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 /**
  * @author Despical
@@ -26,9 +27,10 @@ public class StopCommand extends DCommand {
 		final TextChannel channel = arguments.getTextChannel();
 		final Member self = channel.getGuild().getSelfMember();
 		final GuildVoiceState voiceState = self.getVoiceState();
+		final SlashCommandEvent event = arguments.getEvent();
 
 		if (!voiceState.inVoiceChannel()) {
-			channel.sendMessage("Zaten müzik çalmıyorum!").queue();
+			event.reply("Zaten müzik çalmıyorum!").queue();
 			return;
 		}
 
@@ -36,12 +38,12 @@ public class StopCommand extends DCommand {
 		final GuildVoiceState memberVoiceState = member.getVoiceState();
 
 		if (!memberVoiceState.inVoiceChannel()) {
-			channel.sendMessage("Müziği durdurabilmek için odada olmalısın!").queue();
+			event.reply("Müziği durdurabilmek için odada olmalısın!").queue();
 			return;
 		}
 
 		if (!memberVoiceState.getChannel().equals(voiceState.getChannel())) {
-			channel.sendMessage("Botla aynı odada olmadan müziği durduramazsın!").queue();
+			event.reply("Botla aynı odada olmadan müziği durduramazsın!").queue();
 			return;
 		}
 
@@ -49,13 +51,13 @@ public class StopCommand extends DCommand {
 		final AudioPlayer audioPlayer = musicManager.audioPlayer;
 
 		if (audioPlayer.getPlayingTrack() == null) {
-			channel.sendMessage("Herhangi bir şarkı zaten çalınmıyor!").queue();
+			event.reply("Herhangi bir şarkı zaten çalınmıyor!").queue();
 			return;
 		}
 
 		musicManager.scheduler.clearQueue();
 		musicManager.scheduler.getPlayer().stopTrack();
 
-		channel.sendMessage("Şarkı başarıyla durduruldu.").queue();
+		event.reply("Şarkı başarıyla durduruldu.").queue();
 	}
 }

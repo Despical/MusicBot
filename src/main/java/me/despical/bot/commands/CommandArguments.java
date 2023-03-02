@@ -1,7 +1,7 @@
 package me.despical.bot.commands;
 
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 /**
  * @author Despical
@@ -10,28 +10,34 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  */
 public class CommandArguments {
 
-	private final Message message;
+	private final String message;
 	private final MessageChannel channel;
 	private final TextChannel textChannel;
 	private final Guild guild;
+	private final SlashCommandEvent event;
 
-	public CommandArguments(MessageReceivedEvent event) {
-		this.message = event.getMessage();
+	public CommandArguments(SlashCommandEvent event) {
+		this.event = event;
+		this.message = event.getName();
 		this.channel = event.getChannel();
 		this.textChannel = event.getTextChannel();
 		this.guild = event.getGuild();
 	}
 
-	public Message getMessage() {
+	public SlashCommandEvent getEvent() {
+		return this.event;
+	}
+
+	public String getMessage() {
 		return this.message;
 	}
 
 	public User getAuthor() {
-		return this.message.getAuthor();
+		return this.event.getUser();
 	}
 
 	public Member getMember() {
-		return this.message.getMember();
+		return this.event.getMember();
 	}
 
 	public MessageChannel getChannel() {

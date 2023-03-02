@@ -8,6 +8,7 @@ import me.despical.bot.music.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 /**
  * @author Despical
@@ -26,9 +27,10 @@ public class SkipCommand extends DCommand {
 		final TextChannel channel = arguments.getTextChannel();
 		final Member self = channel.getGuild().getSelfMember();
 		final GuildVoiceState voiceState = self.getVoiceState();
+		final SlashCommandEvent event = arguments.getEvent();
 
 		if (!voiceState.inVoiceChannel()) {
-			channel.sendMessage("Zaten müzik çalmıyorum!").queue();
+			event.reply("Zaten müzik çalmıyorum!").queue();
 			return;
 		}
 
@@ -36,12 +38,12 @@ public class SkipCommand extends DCommand {
 		final GuildVoiceState memberVoiceState = member.getVoiceState();
 
 		if (!memberVoiceState.inVoiceChannel()) {
-			channel.sendMessage("Müziği geçebilmek için bir odada olmalısın!").queue();
+			event.reply("Müziği geçebilmek için bir odada olmalısın!").queue();
 			return;
 		}
 
 		if (!memberVoiceState.getChannel().equals(voiceState.getChannel())) {
-			channel.sendMessage("Botla aynı odada olmadan müziği geçemezsin!").queue();
+			event.reply("Botla aynı odada olmadan müziği geçemezsin!").queue();
 			return;
 		}
 
@@ -49,12 +51,12 @@ public class SkipCommand extends DCommand {
 		final AudioPlayer audioPlayer = musicManager.audioPlayer;
 
 		if (audioPlayer.getPlayingTrack() == null) {
-			channel.sendMessage("Geçilecek bir şarkı bulunamadı.").queue();
+			event.reply("Geçilecek bir şarkı bulunamadı.").queue();
 			return;
 		}
 
 		musicManager.scheduler.playNextTrack();
 
-		channel.sendMessage("Mevcut şarkı geçildi.").queue();
+		event.reply("Mevcut şarkı geçildi.").queue();
 	}
 }

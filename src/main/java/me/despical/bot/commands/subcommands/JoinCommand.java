@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 /**
@@ -25,9 +26,10 @@ public class JoinCommand extends DCommand {
 		final TextChannel channel = arguments.getTextChannel();
 		final Member self = channel.getGuild().getSelfMember();
 		final GuildVoiceState state = self.getVoiceState();
+		final SlashCommandEvent event = arguments.getEvent();
 
 		if (state.inVoiceChannel()) {
-			channel.sendMessage("Bot zaten bir odada!").queue();
+			event.reply("Bot zaten bir odada!").queue();
 			return;
 		}
 
@@ -35,7 +37,7 @@ public class JoinCommand extends DCommand {
 		final GuildVoiceState memberVoiceState = member.getVoiceState();
 
 		if (!memberVoiceState.inVoiceChannel()) {
-			channel.sendMessage("Bu komutu kullanabilmek için bir ses kanalı içinde olmalısın!").queue();
+			event.reply("Bu komutu kullanabilmek için bir ses kanalı içinde olmalısın!").queue();
 			return;
 		}
 
@@ -43,6 +45,6 @@ public class JoinCommand extends DCommand {
 		final VoiceChannel memberChannel = memberVoiceState.getChannel();
 
 		audioManager.openAudioConnection(memberChannel);
-		channel.sendMessageFormat("%s adlı ses kanalına bağlanılıyor...", memberChannel.getName()).queue();
+		event.replyFormat("%s adlı ses kanalına bağlanılıyor...", memberChannel.getName()).queue();
 	}
 }

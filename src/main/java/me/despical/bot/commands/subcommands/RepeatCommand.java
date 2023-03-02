@@ -8,6 +8,7 @@ import me.despical.bot.music.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 /**
  * @author Despical
@@ -26,9 +27,10 @@ public class RepeatCommand extends DCommand {
 		final TextChannel channel = arguments.getTextChannel();
 		final Member self = channel.getGuild().getSelfMember();
 		final GuildVoiceState voiceState = self.getVoiceState();
+		final SlashCommandEvent event = arguments.getEvent();
 
 		if (!voiceState.inVoiceChannel()) {
-			channel.sendMessage("Zaten müzik çalmıyorum!").queue();
+			event.reply("Zaten müzik çalmıyorum!").queue();
 			return;
 		}
 
@@ -36,12 +38,12 @@ public class RepeatCommand extends DCommand {
 		final GuildVoiceState memberVoiceState = member.getVoiceState();
 
 		if (!memberVoiceState.inVoiceChannel()) {
-			channel.sendMessage("Müziği döngüye sokmak için bir odada olmalısın!").queue();
+			event.reply("Müziği döngüye sokmak için bir odada olmalısın!").queue();
 			return;
 		}
 
 		if (!memberVoiceState.getChannel().equals(voiceState.getChannel())) {
-			channel.sendMessage("Botla aynı odada olmadan müziği döngüye sokamazsın!").queue();
+			event.reply("Botla aynı odada olmadan müziği döngüye sokamazsın!").queue();
 			return;
 		}
 
@@ -49,12 +51,12 @@ public class RepeatCommand extends DCommand {
 		final AudioPlayer audioPlayer = musicManager.audioPlayer;
 
 		if (audioPlayer.getPlayingTrack() == null) {
-			channel.sendMessage("Döngüye sokulacak bir şarkı bulunamadı.").queue();
+			event.reply("Döngüye sokulacak bir şarkı bulunamadı.").queue();
 			return;
 		}
 
 		boolean repeating = musicManager.scheduler.toggleRepeating();
 
-		channel.sendMessage(repeating ? "Mevcut şarkı döngüye alındı." : "Mevcut şarkı döngüden çıkarıldı.").queue();
+		event.reply(repeating ? "Mevcut şarkı döngüye alındı." : "Mevcut şarkı döngüden çıkarıldı.").queue();
 	}
 }
