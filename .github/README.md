@@ -17,7 +17,8 @@ Example implementation of LavaPlayer for Discord bots.
 - [Discord Community](https://www.discord.gg/rVkaGmyszE)
 
 ## Donations
-You like the Music Bot? Then [donate](https://www.patreon.com/despical) back me to support the development.
+- [Patreon](https://www.patreon.com/despical)
+- [Buy Me A Coffe](https://www.buymeacoffee.com/despical)
 
 ## Using Music Bot API
 The project isn't in the Central Repository yet, so specifying a repository is needed.<br>
