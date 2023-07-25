@@ -4,7 +4,6 @@
 
 [![](https://jitpack.io/v/Despical/MusicBot.svg)](https://jitpack.io/#Despical/MusicBot)
 [![](https://img.shields.io/badge/JavaDocs-latest-lime.svg)](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
-[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/rVkaGmyszE)
 [![Support](https://img.shields.io/badge/Patreon-Support-lime.svg?logo=Patreon)](https://www.patreon.com/despical)
 
 Example implementation of LavaPlayer for Discord bots.
@@ -14,7 +13,6 @@ Example implementation of LavaPlayer for Discord bots.
 ## Documentation
 - [Wiki](https://github.com/Despical/MusicBot/wiki)
 - [JavaDocs](https://javadoc.jitpack.io/com/github/Despical/MusicBot/latest/javadoc/index.html)
-- [Discord Community](https://www.discord.gg/rVkaGmyszE)
 
 ## Donations
 - [Patreon](https://www.patreon.com/despical)
