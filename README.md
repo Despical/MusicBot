@@ -1,7 +1,7 @@
 # MusicBot
 
 [![](https://github.com/Despical/MusicBot/actions/workflows/build.yaml/badge.svg)](https://github.com/Despical/MusicBot/actions/workflows/build.yaml)
-[![](https://img.shields.io/badge/License-GPLv3-blue.svg)](../LICENSE)
+[![](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Java 25](https://img.shields.io/badge/Java-25-007396.svg)](https://www.java.com/)
 [![JDA](https://img.shields.io/badge/JDA-6.4.1-5865F2.svg)](https://github.com/discord-jda/JDA)
 [![LavaPlayer](https://img.shields.io/badge/LavaPlayer-2.2.2-F59E0B.svg)](https://github.com/lavalink-devs/lavaplayer)
@@ -184,7 +184,7 @@ This file contains per-guild language settings and recent playback history. It i
 
 Please do not open public issues for discovered vulnerabilities.
 
-Read [SECURITY.md](../SECURITY.md) for responsible disclosure reporting.
+Read [SECURITY.md](SECURITY.md) for responsible disclosure reporting.
 
 ---
 
@@ -197,7 +197,7 @@ Pull Requests are welcome. To keep the project clean and easy to review, please 
 * **Version control cleanliness:** Do not increment project version numbers in example configurations within your PR.
 * **Minimal diffs:** Disable automated reformat-on-save settings that affect untouched files.
 
-Learn more via [CONTRIBUTING.md](../CONTRIBUTING.md).
+Learn more via [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -205,4 +205,4 @@ Learn more via [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 This project is licensed under the [GPL-3.0 License](http://www.gnu.org/licenses/gpl-3.0.html).
 
-See [LICENSE](../LICENSE) for the full license text.
+See [LICENSE](LICENSE) for the full license text.
