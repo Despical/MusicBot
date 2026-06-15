@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'dev.despical'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.lavalink.dev/releases' }
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:6.4.1'
+    implementation 'club.minnced:jdave-api:0.1.8'
+    implementation 'club.minnced:jdave-native-win-x86-64:0.1.8'
+    implementation 'dev.arbjerg:lavaplayer:2.2.2'
+    implementation 'dev.lavalink.youtube:v2:1.18.0'
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    implementation 'ch.qos.logback:logback-classic:1.5.13'
+
+    compileOnly 'org.projectlombok:lombok:1.18.46'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.46'
+}
+
+application {
+    mainClass = 'dev.despical.musicbot.MusicBotApplication'
+    applicationDefaultJvmArgs = ['--enable-native-access=ALL-UNNAMED']
+}
