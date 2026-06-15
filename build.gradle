@@ -36,3 +36,16 @@ application {
     mainClass = 'dev.despical.musicbot.MusicBotApplication'
     applicationDefaultJvmArgs = ['--enable-native-access=ALL-UNNAMED']
 }
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass.get(),
+            'Enable-Native-Access': 'ALL-UNNAMED'
+        )
+    }
+}
