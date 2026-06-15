@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import dev.despical.musicbot.i18n.BotLanguage;
-import lombok.AllArgsConstructor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,11 +33,13 @@ public final class GuildStateStore {
 
     public synchronized Optional<BotLanguage> getLanguage(String guildId) {
         GuildState state = persistedState.guilds.computeIfAbsent(guildId, _ -> new GuildState(defaultLanguage.name()));
+        state.ensureDefaults(defaultLanguage);
         return BotLanguage.fromCode(state.language);
     }
 
     public synchronized void setLanguage(String guildId, BotLanguage language) {
         GuildState state = persistedState.guilds.computeIfAbsent(guildId, _ -> new GuildState(defaultLanguage.name()));
+        state.ensureDefaults(defaultLanguage);
         state.language = language.name();
 
         saveState();
@@ -46,6 +47,7 @@ public final class GuildStateStore {
 
     public synchronized void pushHistory(String guildId, TrackHistoryEntry entry) {
         GuildState state = persistedState.guilds.computeIfAbsent(guildId, _ -> new GuildState(defaultLanguage.name()));
+        state.ensureDefaults(defaultLanguage);
 
         if (!state.history.isEmpty()) {
             TrackHistoryEntry current = state.history.getFirst();
@@ -66,6 +68,7 @@ public final class GuildStateStore {
 
     public synchronized List<TrackHistoryEntry> getHistory(String guildId) {
         GuildState state = persistedState.guilds.computeIfAbsent(guildId, _ -> new GuildState(defaultLanguage.name()));
+        state.ensureDefaults(defaultLanguage);
         return List.copyOf(state.history);
     }
 
@@ -79,7 +82,9 @@ public final class GuildStateStore {
                 return state;
             }
 
-            return objectMapper.readValue(filePath.toFile(), PersistedState.class);
+            PersistedState state = objectMapper.readValue(filePath.toFile(), PersistedState.class);
+            state.ensureDefaults();
+            return state;
         } catch (IOException exception) {
             throw new IllegalStateException("Failed to load guild state file", exception);
         }
@@ -96,6 +101,12 @@ public final class GuildStateStore {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class PersistedState {
         public Map<String, GuildState> guilds = new HashMap<>();
+
+        private void ensureDefaults() {
+            if (guilds == null) {
+                guilds = new HashMap<>();
+            }
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -104,12 +115,24 @@ public final class GuildStateStore {
         public String language;
         public List<TrackHistoryEntry> history = new ArrayList<>();
 
+        public GuildState() {
+        }
+
         public GuildState(String language) {
             this.language = language;
         }
+
+        private void ensureDefaults(BotLanguage defaultLanguage) {
+            if (language == null || language.isBlank()) {
+                language = defaultLanguage.name();
+            }
+
+            if (history == null) {
+                history = new ArrayList<>();
+            }
+        }
     }
 
-    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class TrackHistoryEntry {
 
@@ -119,5 +142,17 @@ public final class GuildStateStore {
         public String requestedBy;
         public long duration;
         public boolean live;
+
+        public TrackHistoryEntry() {
+        }
+
+        public TrackHistoryEntry(String playQuery, String displayTitle, String sourceUrl, String requestedBy, long duration, boolean live) {
+            this.playQuery = playQuery;
+            this.displayTitle = displayTitle;
+            this.sourceUrl = sourceUrl;
+            this.requestedBy = requestedBy;
+            this.duration = duration;
+            this.live = live;
+        }
     }
 }
