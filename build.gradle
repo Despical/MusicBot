@@ -21,6 +21,7 @@ dependencies {
     implementation 'net.dv8tion:JDA:6.4.1'
     implementation 'club.minnced:jdave-api:0.1.8'
     implementation 'club.minnced:jdave-native-win-x86-64:0.1.8'
+    implementation 'club.minnced:jdave-native-linux-x86-64:0.1.8'
     implementation 'dev.arbjerg:lavaplayer:2.2.2'
     implementation 'dev.lavalink.youtube:v2:1.18.0'
     implementation 'io.github.cdimascio:dotenv-java:3.0.0'

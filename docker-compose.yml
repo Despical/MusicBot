@@ -1,0 +1,9 @@
+services:
+  musicbot:
+    build: .
+    container_name: musicbot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/opt/musicbot/data

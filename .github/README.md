@@ -105,6 +105,34 @@ Linux / macOS:
 
 ---
 
+## Docker
+
+Docker is the recommended way to keep the bot running on a server.
+
+1. Create `.env` from `.env.example` and fill in your Discord token.
+2. Start the container:
+
+```bash
+docker compose up -d --build
+```
+
+3. Check logs:
+
+```bash
+docker compose logs -f musicbot
+```
+
+4. Stop the bot:
+
+```bash
+docker compose down
+```
+
+The compose file mounts `./data` into the container, so guild language settings
+and playback history survive rebuilds and restarts.
+
+---
+
 ## Discord Setup
 
 1. Create an application and bot in the Discord Developer Portal.
