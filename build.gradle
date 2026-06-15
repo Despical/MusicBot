@@ -18,14 +18,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.dv8tion:JDA:6.4.1'
+    implementation 'net.dv8tion:JDA:6.4.2'
     implementation 'club.minnced:jdave-api:0.1.8'
     implementation 'club.minnced:jdave-native-win-x86-64:0.1.8'
-    implementation 'dev.arbjerg:lavaplayer:2.2.2'
-    implementation 'dev.lavalink.youtube:v2:1.18.0'
-    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
-    implementation 'ch.qos.logback:logback-classic:1.5.13'
+    implementation 'dev.arbjerg:lavaplayer:2.2.6'
+    implementation 'dev.lavalink.youtube:v2:1.18.1'
+    implementation 'io.github.cdimascio:dotenv-java:3.2.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.0'
+    implementation 'ch.qos.logback:logback-classic:1.5.34'
 
     compileOnly 'org.projectlombok:lombok:1.18.46'
 
