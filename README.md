@@ -135,7 +135,7 @@ and playback history survive rebuilds and restarts.
 
 ## Discord Setup
 
-1. Create an application and bot in the Discord Developer Portal.
+1. Create an application and bot in the [Discord Developer Portal](https://discord.com/developers/applications).
 2. Enable the bot token and copy it into `.env` as `DISCORD_TOKEN`.
 3. Invite the bot with slash command and voice permissions.
 4. Run the application and wait for slash commands to register.
