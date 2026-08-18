@@ -5,5 +5,15 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      YOUTUBE_CIPHER_URL: http://yt-cipher:8001
+    depends_on:
+      - yt-cipher
     volumes:
       - ./data:/opt/musicbot/data
+
+  yt-cipher:
+    image: ghcr.io/kikkia/yt-cipher:master
+    restart: unless-stopped
+    environment:
+      OVERRIDE_PLAYER_VARIANT: IAS

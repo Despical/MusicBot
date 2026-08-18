@@ -31,6 +31,7 @@ import dev.despical.musicbot.persistence.GuildStateStore.TrackHistoryEntry;
 import dev.despical.musicbot.spotify.SpotifyService;
 import dev.despical.musicbot.spotify.SpotifyService.SpotifyTrackDescriptor;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
+import dev.lavalink.youtube.YoutubeSourceOptions;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
@@ -617,7 +618,18 @@ public final class MusicService implements PlaybackEventListener {
     }
 
     private void registerSources() {
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+        String remoteCipherUrl = System.getenv("YOUTUBE_CIPHER_URL");
+        YoutubeAudioSourceManager youtubeSourceManager;
+
+        if (remoteCipherUrl == null || remoteCipherUrl.isBlank()) {
+            youtubeSourceManager = new YoutubeAudioSourceManager();
+        } else {
+            YoutubeSourceOptions options = new YoutubeSourceOptions()
+                .setRemoteCipher(remoteCipherUrl.trim(), null, "MusicBot");
+            youtubeSourceManager = new YoutubeAudioSourceManager(options);
+        }
+
+        playerManager.registerSourceManager(youtubeSourceManager);
         AudioSourceManagers.registerRemoteSources(playerManager, YoutubeAudioSourceManager.class);
         AudioSourceManagers.registerLocalSource(playerManager);
     }
