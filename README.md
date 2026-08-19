@@ -65,6 +65,8 @@ Open `.env` and fill in the values:
 DISCORD_TOKEN=your_discord_bot_token
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+YOUTUBE_OAUTH2_ENABLED=false
+YOUTUBE_OAUTH2_REFRESH_TOKEN=
 DEFAULT_LANGUAGE=EN
 ```
 
@@ -72,6 +74,9 @@ Notes:
 
 * `DISCORD_TOKEN` is required.
 * `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` are optional, but Spotify links will not work without them.
+* `YOUTUBE_OAUTH2_ENABLED` is optional. Set it to `true` when YouTube requires a signed-in account. A separate Google client ID or client secret is not needed because `youtube-source` uses its built-in device authorization flow.
+* On the first OAuth2 start, leave `YOUTUBE_OAUTH2_REFRESH_TOKEN` empty and follow the URL and device code printed in the bot logs. Use a dedicated account instead of your primary YouTube account.
+* After authorization, copy the refresh token printed in the logs into `YOUTUBE_OAUTH2_REFRESH_TOKEN` so later starts can sign in without repeating the device flow.
 * `DEFAULT_LANGUAGE` is optional. Supported values are `TR` and `EN`.
 * The bot can also read these values from system environment variables instead of `.env`.
 
@@ -162,6 +167,15 @@ Set these variables if you want Spotify support:
 ```env
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+```
+
+## YouTube OAuth2
+
+Enable OAuth2 when YouTube rejects anonymous playback with a login-required error:
+
+```env
+YOUTUBE_OAUTH2_ENABLED=true
+YOUTUBE_OAUTH2_REFRESH_TOKEN=your_youtube_oauth2_refresh_token
 ```
 
 ---
