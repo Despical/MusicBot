@@ -29,6 +29,7 @@ public record BotConfig(
     String token,
     String spotifyClientId,
     String spotifyClientSecret,
+    YoutubeConfig youtube,
     BotLanguage defaultLanguage
 ) {
 
@@ -40,8 +41,18 @@ public record BotConfig(
         String spotifyClientSecret = readValue(dotenv, "SPOTIFY_CLIENT_SECRET", false);
         String languageValue = readValue(dotenv, "DEFAULT_LANGUAGE", false);
 
+        boolean youtubeOauth2Enabled = readBoolean(dotenv, "YOUTUBE_OAUTH2_ENABLED", false);
+        String youtubeOauth2RefreshToken = readValue(dotenv, "YOUTUBE_OAUTH2_REFRESH_TOKEN", false);
+        var youtubeConfig = new YoutubeConfig(youtubeOauth2Enabled, youtubeOauth2RefreshToken);
+
         BotLanguage defaultLanguage = BotLanguage.fromCode(languageValue).orElse(BotLanguage.EN);
-        return new BotConfig(token, spotifyClientId, spotifyClientSecret, defaultLanguage);
+        return new BotConfig(
+            token,
+            spotifyClientId,
+            spotifyClientSecret,
+            youtubeConfig,
+            defaultLanguage
+        );
     }
 
     private static String readValue(Dotenv dotenv, String key, boolean required) {
@@ -56,5 +67,19 @@ public record BotConfig(
         }
 
         return value == null ? "" : value.trim();
+    }
+
+    private static boolean readBoolean(Dotenv dotenv, String key, boolean defaultValue) {
+        String value = readValue(dotenv, key, false);
+
+        if (value.isBlank()) {
+            return defaultValue;
+        }
+
+        if (!value.equalsIgnoreCase("true") && !value.equalsIgnoreCase("false")) {
+            throw new IllegalStateException(key + " must be true or false.");
+        }
+
+        return Boolean.parseBoolean(value);
     }
 }
