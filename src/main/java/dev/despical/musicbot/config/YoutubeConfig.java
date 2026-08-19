@@ -24,6 +24,7 @@ package dev.despical.musicbot.config;
  */
 public record YoutubeConfig(
     boolean oauth2Enabled,
-    String oauth2RefreshToken
+    String oauth2RefreshToken,
+    String remoteCipherUrl
 ) {
 }

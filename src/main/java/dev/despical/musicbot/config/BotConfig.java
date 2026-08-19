@@ -43,7 +43,12 @@ public record BotConfig(
 
         boolean youtubeOauth2Enabled = readBoolean(dotenv, "YOUTUBE_OAUTH2_ENABLED", false);
         String youtubeOauth2RefreshToken = readValue(dotenv, "YOUTUBE_OAUTH2_REFRESH_TOKEN", false);
-        var youtubeConfig = new YoutubeConfig(youtubeOauth2Enabled, youtubeOauth2RefreshToken);
+        String youtubeCipherUrl = readValue(dotenv, "YOUTUBE_CIPHER_URL", false);
+        var youtubeConfig = new YoutubeConfig(
+            youtubeOauth2Enabled,
+            youtubeOauth2RefreshToken,
+            youtubeCipherUrl.isBlank() ? "https://cipher.kikkia.dev/" : youtubeCipherUrl
+        );
 
         BotLanguage defaultLanguage = BotLanguage.fromCode(languageValue).orElse(BotLanguage.EN);
         return new BotConfig(
