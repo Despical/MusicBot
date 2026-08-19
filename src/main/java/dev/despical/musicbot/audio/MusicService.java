@@ -25,6 +25,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import dev.despical.musicbot.config.YoutubeConfig;
 import dev.despical.musicbot.i18n.TranslationService;
 import dev.despical.musicbot.persistence.GuildStateStore;
 import dev.despical.musicbot.persistence.GuildStateStore.TrackHistoryEntry;
@@ -32,6 +33,12 @@ import dev.despical.musicbot.spotify.SpotifyService;
 import dev.despical.musicbot.spotify.SpotifyService.SpotifyTrackDescriptor;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
+import dev.lavalink.youtube.clients.AndroidVr;
+import dev.lavalink.youtube.clients.Music;
+import dev.lavalink.youtube.clients.Tv;
+import dev.lavalink.youtube.clients.Web;
+import dev.lavalink.youtube.clients.WebEmbedded;
+import dev.lavalink.youtube.clients.skeleton.Client;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.buttons.Button;
@@ -82,11 +89,18 @@ public final class MusicService implements PlaybackEventListener {
     private final GuildStateStore stateStore;
     private final SpotifyService spotifyService;
     private final TranslationService translations;
+    private final YoutubeConfig youtubeConfig;
 
-    public MusicService(GuildStateStore stateStore, SpotifyService spotifyService, TranslationService translations) {
+    public MusicService(
+        GuildStateStore stateStore,
+        SpotifyService spotifyService,
+        TranslationService translations,
+        YoutubeConfig youtubeConfig
+    ) {
         this.stateStore = stateStore;
         this.spotifyService = spotifyService;
         this.translations = translations;
+        this.youtubeConfig = youtubeConfig;
         this.musicManagers = new ConcurrentHashMap<>();
         this.notificationChannels = new ConcurrentHashMap<>();
         this.pendingPlaybackRequests = new ConcurrentHashMap<>();
@@ -618,15 +632,29 @@ public final class MusicService implements PlaybackEventListener {
     }
 
     private void registerSources() {
-        String remoteCipherUrl = System.getenv("YOUTUBE_CIPHER_URL");
+        Client[] youtubeClients = youtubeConfig.oauth2Enabled() ?
+            new Client[] {
+                new Music(),
+                new AndroidVr(),
+                new Web(),
+                new WebEmbedded(),
+                new Tv()
+            } : YoutubeAudioSourceManager.DEFAULT_CLIENTS;
+
         YoutubeAudioSourceManager youtubeSourceManager;
+        String remoteCipherUrl = System.getenv("YOUTUBE_CIPHER_URL");
 
         if (remoteCipherUrl == null || remoteCipherUrl.isBlank()) {
-            youtubeSourceManager = new YoutubeAudioSourceManager();
+            youtubeSourceManager = new YoutubeAudioSourceManager(youtubeClients);
         } else {
             YoutubeSourceOptions options = new YoutubeSourceOptions()
                 .setRemoteCipher(remoteCipherUrl.trim(), null, "MusicBot");
-            youtubeSourceManager = new YoutubeAudioSourceManager(options);
+            youtubeSourceManager = new YoutubeAudioSourceManager(options, youtubeClients);
+        }
+
+        if (youtubeConfig.oauth2Enabled()) {
+            boolean hasRefreshToken = !youtubeConfig.oauth2RefreshToken().isBlank();
+            youtubeSourceManager.useOauth2(hasRefreshToken ? youtubeConfig.oauth2RefreshToken() : null, hasRefreshToken);
         }
 
         playerManager.registerSourceManager(youtubeSourceManager);

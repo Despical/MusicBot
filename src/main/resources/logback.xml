@@ -9,6 +9,7 @@
     <logger name="com.musicbot" level="DEBUG" />
     <logger name="net.dv8tion.jda" level="INFO" />
     <logger name="com.sedmelluq.discord.lavaplayer" level="INFO" />
+    <logger name="dev.lavalink.youtube.http.YoutubeOauth2Handler" level="INFO" />
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

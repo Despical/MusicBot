@@ -43,7 +43,12 @@ public class MusicBotApplication {
         var stateStore = new GuildStateStore(config.defaultLanguage());
         var translations = new TranslationService(stateStore, config.defaultLanguage());
         var spotifyService = new SpotifyService(config.spotifyClientId(), config.spotifyClientSecret());
-        var musicService = new MusicService(stateStore, spotifyService, translations);
+        var musicService = new MusicService(
+            stateStore,
+            spotifyService,
+            translations,
+            config.youtube()
+        );
 
         JDABuilder.createDefault(config.token())
             .enableIntents(GatewayIntent.GUILD_VOICE_STATES)
