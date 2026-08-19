@@ -67,6 +67,7 @@ SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 YOUTUBE_OAUTH2_ENABLED=false
 YOUTUBE_OAUTH2_REFRESH_TOKEN=
+YOUTUBE_CIPHER_URL=https://cipher.kikkia.dev/
 DEFAULT_LANGUAGE=EN
 ```
 
@@ -77,6 +78,7 @@ Notes:
 * `YOUTUBE_OAUTH2_ENABLED` is optional. Set it to `true` when YouTube requires a signed-in account. A separate Google client ID or client secret is not needed because `youtube-source` uses its built-in device authorization flow.
 * On the first OAuth2 start, leave `YOUTUBE_OAUTH2_REFRESH_TOKEN` empty and follow the URL and device code printed in the bot logs. Use a dedicated account instead of your primary YouTube account.
 * After authorization, copy the refresh token printed in the logs into `YOUTUBE_OAUTH2_REFRESH_TOKEN` so later starts can sign in without repeating the device flow.
+* `YOUTUBE_CIPHER_URL` defaults to the public `yt-cipher` instance. Set it to your own instance for production deployments that should not depend on the public service.
 * `DEFAULT_LANGUAGE` is optional. Supported values are `TR` and `EN`.
 * The bot can also read these values from system environment variables instead of `.env`.
 
