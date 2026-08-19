@@ -34,6 +34,8 @@ import dev.despical.musicbot.spotify.SpotifyService.SpotifyTrackDescriptor;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
 import dev.lavalink.youtube.clients.AndroidVr;
+import dev.lavalink.youtube.clients.ClientOptions;
+import dev.lavalink.youtube.clients.Ios;
 import dev.lavalink.youtube.clients.Music;
 import dev.lavalink.youtube.clients.Tv;
 import dev.lavalink.youtube.clients.Web;
@@ -632,25 +634,30 @@ public final class MusicService implements PlaybackEventListener {
     }
 
     private void registerSources() {
+        ClientOptions playbackOnlyOptions = new ClientOptions();
+        playbackOnlyOptions.setSearching(false);
+        playbackOnlyOptions.setVideoLoading(false);
+        playbackOnlyOptions.setPlaylistLoading(false);
+
         Client[] youtubeClients = youtubeConfig.oauth2Enabled() ?
             new Client[] {
+                new Ios(playbackOnlyOptions),
+                new Tv(),
                 new Music(),
                 new AndroidVr(),
                 new Web(),
-                new WebEmbedded(),
-                new Tv()
-            } : YoutubeAudioSourceManager.DEFAULT_CLIENTS;
+                new WebEmbedded()
+            } : new Client[] {
+                new Ios(playbackOnlyOptions),
+                new Music(),
+                new AndroidVr(),
+                new Web(),
+                new WebEmbedded()
+            };
 
-        YoutubeAudioSourceManager youtubeSourceManager;
-        String remoteCipherUrl = System.getenv("YOUTUBE_CIPHER_URL");
-
-        if (remoteCipherUrl == null || remoteCipherUrl.isBlank()) {
-            youtubeSourceManager = new YoutubeAudioSourceManager(youtubeClients);
-        } else {
-            YoutubeSourceOptions options = new YoutubeSourceOptions()
-                .setRemoteCipher(remoteCipherUrl.trim(), null, "MusicBot");
-            youtubeSourceManager = new YoutubeAudioSourceManager(options, youtubeClients);
-        }
+        YoutubeSourceOptions options = new YoutubeSourceOptions()
+            .setRemoteCipher(youtubeConfig.remoteCipherUrl(), null, "MusicBot");
+        YoutubeAudioSourceManager youtubeSourceManager = new YoutubeAudioSourceManager(options, youtubeClients);
 
         if (youtubeConfig.oauth2Enabled()) {
             boolean hasRefreshToken = !youtubeConfig.oauth2RefreshToken().isBlank();
