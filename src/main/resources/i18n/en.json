@@ -12,6 +12,7 @@
   "error.invalid_history_index": "Invalid history index. Use a value between 1 and {0}.",
   "error.spotify_credentials_missing": "Spotify playback requires SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET in .env.",
   "error.no_matches": "No playable results were found for the given input.",
+  "error.search_timeout": "Track search timed out. Please try again in a moment.",
   "error.load_failed": "Failed to load track: {0}",
   "error.empty_queue": "The queue is currently empty.",
   "error.invalid_volume": "Volume must be between 1 and 200.",

@@ -12,6 +12,7 @@
   "error.invalid_history_index": "Geçersiz geçmiş indexi. 1 ile {0} arasında bir değer kullan.",
   "error.spotify_credentials_missing": "Spotify linklerini oynatmak için .env içinde SPOTIFY_CLIENT_ID ve SPOTIFY_CLIENT_SECRET tanımlı olmalı.",
   "error.no_matches": "Verilen girdi için oynatılabilir bir sonuç bulunamadı.",
+  "error.search_timeout": "Parça araması zaman aşımına uğradı. Lütfen biraz sonra tekrar dene.",
   "error.load_failed": "Parça yüklenemedi: {0}",
   "error.empty_queue": "Kuyruk şu anda boş.",
   "error.invalid_volume": "Ses seviyesi 1 ile 200 arasında olmalı.",

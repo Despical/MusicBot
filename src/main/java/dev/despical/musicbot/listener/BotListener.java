@@ -61,6 +61,7 @@ import java.util.stream.Stream;
 public final class BotListener extends ListenerAdapter {
 
     private static final long AUTO_DISCONNECT_DELAY_SECONDS = 2;
+    private static final long SEARCH_LOAD_TIMEOUT_SECONDS = 30;
     private static final long SEARCH_SELECTION_TIMEOUT_SECONDS = 120;
     private static final int SEARCH_RESULT_LIMIT = 5;
     private static final Color COLOR_PRIMARY = new Color(0x5865F2);
@@ -286,6 +287,7 @@ public final class BotListener extends ListenerAdapter {
         event.deferReply(true).queue();
 
         musicService.search(query, SEARCH_RESULT_LIMIT)
+            .orTimeout(SEARCH_LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .whenComplete((results, throwable) -> {
                 if (throwable != null) {
                     event.getHook().editOriginal(resolveErrorMessage(event.getGuild().getId(), throwable)).queue();
@@ -937,6 +939,10 @@ public final class BotListener extends ListenerAdapter {
 
     private String resolveErrorMessage(String guildId, Throwable throwable) {
         Throwable cause = throwable instanceof CompletionException && throwable.getCause() != null ? throwable.getCause() : throwable;
+
+        if (cause instanceof TimeoutException) {
+            return translations.get(guildId, "error.search_timeout");
+        }
 
         if (cause instanceof IllegalStateException illegalStateException) {
             String message = illegalStateException.getMessage();
