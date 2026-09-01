@@ -26,8 +26,8 @@ dependencies {
     implementation 'dev.arbjerg:lavaplayer:2.2.7'
     implementation 'dev.lavalink.youtube:v2:34ee4c5f6b4608c19880ff62f80540c0048f537e-SNAPSHOT'
     implementation 'io.github.cdimascio:dotenv-java:3.2.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.1'
-    implementation 'ch.qos.logback:logback-classic:1.6.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.2'
+    implementation 'ch.qos.logback:logback-classic:1.6.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.46'
 
